@@ -35,22 +35,3 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['size'] = [
     },
     'sql' => "varchar(64) NOT NULL default ''"
 ];
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['imagemargin'] = [
-    'label' => &$GLOBALS['TL_LANG']['tl_module']['imagemargin'],
-    'exclude' => true,
-    'inputType' => 'trbl',
-    'options' => $GLOBALS['TL_CSS_UNITS'],
-    'eval' => array('includeBlankOption' => true, 'tl_class' => 'w50 clr'),
-    'sql' => "varchar(128) NOT NULL default ''"
-];
-
-$GLOBALS['TL_DCA']['tl_module']['fields']['floating'] = [
-    'label'                   => &$GLOBALS['TL_LANG']['tl_content']['floating'],
-    'exclude'                 => true,
-    'inputType'               => 'radioTable',
-    'options'                 => array('above', 'left', 'right', 'below'),
-    'eval'                    => array('cols'=>4, 'tl_class'=>'w50'),
-    'reference'               => &$GLOBALS['TL_LANG']['MSC'],
-    'sql'                     => "varchar(12) NOT NULL default 'above'"
-];

@@ -2,7 +2,7 @@
     <?php $i=$this->primaryImage; //dump($i);?>
     <?php if($i): ?>
     <div class="image">
-        <img src="<?= $i->src ?>" <?= $i->imgSize ?>>
+        <img src="<?= $i['src'] ?>" width="<?= $i['width'] ?>" height="<?= $i['height'] ?>" >
     </div>
     <?php endif; ?>
     <div class="header">
