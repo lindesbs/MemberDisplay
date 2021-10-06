@@ -3,7 +3,7 @@
 
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['MemberDisplay'] .= 'name,type,mitarbeiter,customTpl,jumpTo;size,imagemargin,floating;{expert_legend:hide},guests,cssID;{memberdisplay_legend:show}';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['MemberDisplay'] .= 'name,type,mitarbeiter,customTpl;jumpTo;size,imagemargin,floating;{expert_legend:hide},guests,cssID;{memberdisplay_legend:show}';
 
 
 // Extend default palette
