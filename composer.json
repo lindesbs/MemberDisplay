@@ -13,7 +13,7 @@
   "require": {
     "contao/core-bundle": "^5.1",
     "lindesbs/userobject": "^0.1",
-    "lindesbs/dcaattrib": "@dev"
+    "lindesbs/ContaoDCA": "@dev"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",

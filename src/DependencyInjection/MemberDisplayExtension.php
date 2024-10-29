@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace lindesbs\MemberDisplay\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -12,13 +14,13 @@ class MemberDisplayExtension extends Extension
     /**
      * {@inheritdoc}
      */
-    public function load(array $mergedConfig, ContainerBuilder $container): void
+    public function load(array $mergedConfig, ContainerBuilder $containerBuilder): void
     {
-        $loader = new YamlFileLoader(
-            $container,
+        $yamlFileLoader = new YamlFileLoader(
+            $containerBuilder,
             new FileLocator(__DIR__ . '/../Resources/config')
         );
 
-        $loader->load('services.yml');
+        $yamlFileLoader->load('services.yml');
     }
 }

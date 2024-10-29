@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace lindesbs\MemberDisplay\DCA;
 
 use Contao\Backend;
@@ -14,20 +16,20 @@ class ModuleTools extends Backend
         $this->import(BackendUser::class, 'User');
     }
 
-    public function getTitle(DataContainer $dc)
+    public function getTitle(DataContainer $dataContainer)
     {
         $arrModules=[];
-        $objModules = $this->Database->execute("SELECT id,firstname,lastname,company FROM tl_member WHERE disable!=1 ORDER BY firstname");
+        $result = $this->Database->execute("SELECT id,firstname,lastname,company FROM tl_member WHERE disable!=1 ORDER BY firstname");
 
-        while ($objModules->next())
+        while ($result->next())
         {
-            $name = trim($objModules->firstname.' '.$objModules->lastname);
+            $name = trim($result->firstname.' '.$result->lastname);
 
-            if ($objModules->company) {
-                $name.=", ".$objModules->company;
+            if ($result->company) {
+                $name.=", ".$result->company;
             }
 
-            $arrModules[$objModules->id] = $name;
+            $arrModules[$result->id] = $name;
         }
 
         return $arrModules;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace lindesbs\MemberDisplay\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
@@ -13,7 +15,7 @@ class Plugin implements BundlePluginInterface
     /**
      * {@inheritdoc}
      */
-    public function getBundles(ParserInterface $parser)
+    public function getBundles(ParserInterface $parser): array
     {
         return [
             BundleConfig::create(MemberDisplayBundle::class)
