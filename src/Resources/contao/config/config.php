@@ -1,18 +1,11 @@
-<?php
+<?php declare(strict_types=1);
+
+#$GLOBALS['FE_MOD']['user']['MemberDisplay'] = MemberDisplayModule::class;
 
 
-declare(strict_types=1);
-
-use lindesbs\MemberDisplay\FrontendModule\MemberDisplayModule;
-
-$GLOBALS['FE_MOD']['user']['MemberDisplay'] = MemberDisplayModule::class;
-
-
-$GLOBALS['BE_MOD'] = [
-    'MemberDisplay' => [
-        'page' => [
+$GLOBALS['BE_MOD']['MemberDisplay'] = [
+        'user' => [
             'tables' => ['tl_memberdisplay'
             ],
         ]
-    ]
-];
+    ];

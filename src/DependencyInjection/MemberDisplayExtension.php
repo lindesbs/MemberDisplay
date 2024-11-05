@@ -11,16 +11,10 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class MemberDisplayExtension extends Extension
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function load(array $mergedConfig, ContainerBuilder $containerBuilder): void
+    public function load(array $configs, ContainerBuilder $containerBuilder): void
     {
-        $yamlFileLoader = new YamlFileLoader(
-            $containerBuilder,
-            new FileLocator(__DIR__ . '/../Resources/config')
-        );
-
-        $yamlFileLoader->load('services.yml');
+        (new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config')))
+            ->load('services.yaml')
+        ;
     }
 }

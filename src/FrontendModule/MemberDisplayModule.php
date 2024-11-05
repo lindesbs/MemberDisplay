@@ -4,71 +4,22 @@ declare(strict_types=1);
 
 namespace lindesbs\MemberDisplay\FrontendModule;
 
-use Contao\BackendTemplate;
-use Contao\FilesModel;
-use Contao\Module;
-use Contao\StringUtil;
-use Contao\System;
+use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
+use Contao\CoreBundle\DependencyInjection\Attribute\AsFrontendModule;
+use Contao\CoreBundle\Twig\FragmentTemplate;
+use Contao\ModuleModel;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
-class MemberDisplayModule extends Module
+
+#[AsFrontendModule(category: 'user')]
+class MemberDisplayModule extends AbstractFrontendModuleController
 {
-
-    /**
-     * Template
-     *
-     * @var string
-     */
-    protected $strTemplate = 'mod_MemberDisplay';
-
-
-    /**
-     * Display a wildcard in the back end
-     *
-     * @return string
-     */
-    public function generate()
+    protected function getResponse(FragmentTemplate $fragmentTemplate, ModuleModel $moduleModel, Request $request): Response
     {
-        $request = System::getContainer()->get('request_stack')->getCurrentRequest();
 
-        if ($request && System::getContainer()->get('contao.routing.scope_matcher')->isBackendRequest($request)) {
-            $backendTemplate = new BackendTemplate('be_wildcard');
-            $backendTemplate->wildcard = '### MemberDisplay ###';
-            $backendTemplate->title = $this->headline;
-            $backendTemplate->id = $this->id;
-            $backendTemplate->link = $this->name;
-            $backendTemplate->href = 'contao/main.php?do=themes&amp;table=tl_module&amp;act=edit&amp;id=' . $this->id;
+        $fragmentTemplate->action = $request->getUri();
 
-            return $backendTemplate->parse();
-        }
-
-
-        return parent::generate();
-    }
-
-    /**
-     * Generate the module
-     */
-    protected function compile()
-    {
-        $container = System::getContainer();
-        $rootDir = $container->getParameter('kernel.project_dir');
-
-
-        $mitarbeiter = $this->Database->prepare("SELECT * FROM tl_member WHERE id=?")->limit(1)->execute($this->mitarbeiter);
-
-        $this->Template->mitarbeiter = $mitarbeiter;
-
-        $objFile = FilesModel::findByUuid($mitarbeiter->primaryimage);
-        $path = $objFile->path;
-        if ($objFile !== null || is_file($rootDir . '/' . $path)) {
-            $picture = $container
-                ->get('contao.image.picture_factory')
-                ->create($rootDir . '/' . $path, StringUtil::deserialize($this->size));
-
-            $this->Template->primaryImage = $picture->getImg($rootDir);
-
-        }
+        return $fragmentTemplate->getResponse();
     }
 }
-
-class_alias(MemberDisplayModule::class, 'MemberDisplayModule');

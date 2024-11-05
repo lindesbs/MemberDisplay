@@ -6,53 +6,19 @@ namespace lindesbs\MemberDisplay\Resources\contao\dca;
 
 use lindesbs\ContaoDCA\Attribute\DCAConfig;
 use lindesbs\ContaoDCA\Attribute\DCAField;
-use lindesbs\ContaoDCA\Contract\DCAAwareInterface;
 
-#[DCAConfig(
-    table: 'tl_news',
-    config: [
-        'dataContainer' => 'Table',
-        'enableVersioning' => true,
-    ],
-    list: [
-        'sorting' => [
-            'mode' => 1,
-            'fields' => ['headline'],
-            'flag' => 1,
-        ],
-        'label' => [
-            'fields' => ['headline', 'date'],
-            'format' => '%s (%s)',
-        ],
-    ],
-    palettes: [
-        'default' => '{title_legend},headline,alias,author;{date_legend},date,time;{text_legend},teaser,text'
-    ]
-)]
-class tl_memberdisplay implements DCAAwareInterface
+#[DCAConfig()]
+class tl_memberdisplay
 {
     private int $id;
 
-    #[DCAField(
-        name: 'headline',
-        inputType: 'text',
-        eval: ['mandatory' => true, 'maxlength' => 255]
-    )]
+    #[DCAField()]
     private string $headline;
 
-    #[DCAField(
-        name: 'alias',
-        inputType: 'alias',
-        eval: ['doNotCopy' => true, 'unique' => true, 'maxlength' => 128]
-    )]
+    #[DCAField()]
     private string $alias;
 
-    #[DCAField(
-        name: 'author',
-        inputType: 'select',
-        foreignKey: 'tl_user.name',
-        relation: ['type' => 'hasOne', 'load' => 'eager']
-    )]
+    #[DCAField()]
     private int $author;
 
     public function getId(): int
@@ -99,3 +65,6 @@ class tl_memberdisplay implements DCAAwareInterface
         return $this;
     }
 }
+
+
+dd($GLOBALS['TL_DCA']);
