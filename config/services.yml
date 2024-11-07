@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autoconfigure: true
+    autowire: true
+    public: false
+
+  lindesbs\MemberDisplay\:
+    resource: ../src/
+    exclude: ../src/{ContaoManager,DependencyInjection}
