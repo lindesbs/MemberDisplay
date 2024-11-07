@@ -13,8 +13,8 @@ class MemberDisplayExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $containerBuilder): void
     {
-        (new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../Resources/config')))
-            ->load('services.yaml')
+        (new YamlFileLoader($containerBuilder, new FileLocator(__DIR__ . '/../../config')))
+            ->load('services.yml')
         ;
     }
 }

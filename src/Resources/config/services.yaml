@@ -1,9 +1,0 @@
-services:
-  _defaults:
-    autoconfigure: true
-    autowire: true
-    public: false
-
-  lindesbs\MemberDisplay\:
-    resource: ../
-    exclude: ../{ContaoManager,DependencyInjection,config,contao}

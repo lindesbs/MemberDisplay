@@ -13,7 +13,7 @@
   "require": {
     "contao/core-bundle": "^5.1",
     "lindesbs/userobject": "^0.1",
-    "lindesbs/ContaoDCA": "@dev"
+    "lindesbs/contao-entity-attributes-bundle": "@dev"
   },
   "require-dev": {
     "contao/manager-plugin": "^2.0",
@@ -25,17 +25,7 @@
   "autoload": {
     "psr-4": {
       "lindesbs\\MemberDisplay\\": "src/"
-    },
-    "classmap": [
-      "src/Resources/contao"
-    ],
-    "exclude-from-classmap": [
-      "src/Resources/contao/assets",
-      "src/Resources/contao/config",
-      "src/Resources/contao/dca",
-      "src/Resources/contao/languages",
-      "src/Resources/contao/templates"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {
