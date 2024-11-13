@@ -18,7 +18,7 @@ class MemberDisplayExtension extends Extension
     {
         $yamlFileLoader = new YamlFileLoader(
             $containerBuilder,
-            new FileLocator(__DIR__ . '/../Resources/config')
+            new FileLocator(__DIR__ . '/../config')
         );
 
         $yamlFileLoader->load('services.yml');

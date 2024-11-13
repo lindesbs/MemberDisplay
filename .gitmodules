@@ -1,0 +1,3 @@
+[submodule "ContaoClasses"]
+	path = src/ontaoClasses
+	url = git@github.com:lindesbs/contaoclasses.git
