@@ -1,34 +1,24 @@
 {
-  "name": "lindesbs/memberdisplay",
-  "type": "contao-bundle",
-  "description": "MemberDisplay",
-  "homepage": "https://ktrion.de",
-  "license": "LGPL-3.0-or-later",
-  "authors": [
-    {
-      "name": "Stefan Lindecke",
-      "homepage": "https://lindesbs.de"
+    "name": "lindesbs/memberdisplay",
+    "type": "contao-bundle",
+    "description": "MemberDisplay",
+    "homepage": "https://ktrion.de",
+    "license": "LGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Stefan Lindecke",
+            "homepage": "https://lindesbs.de"
+        }
+    ],
+    "require": {
+        "lindesbs/userobject": "^0.1"
+    },
+    "extra": {
+        "contao-manager-plugin": "lindesbs\\MemberDisplay\\ContaoManager\\Plugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "lindesbs\\MemberDisplay\\": "src/"
+        }
     }
-  ],
-  "require": {
-    "contao/core-bundle": "^5.1",
-    "lindesbs/userobject": "^0.1"
-  },
-  "require-dev": {
-    "contao/manager-plugin": "^2.0",
-    "contao/easy-coding-standard": "^3.0"
-  },
-  "extra": {
-    "contao-manager-plugin": "lindesbs\\MemberDisplay\\ContaoManager\\Plugin"
-  },
-  "autoload": {
-    "psr-4": {
-      "lindesbs\\MemberDisplay\\": "src/"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "lindesbs\\MemberDisplay\\Tests\\": "tests/"
-    }
-  }
 }

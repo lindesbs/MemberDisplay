@@ -44,13 +44,13 @@ $GLOBALS['TL_DCA']['tl_member']['fields']['secondaryimages'] = [
     'sql' => "blob NULL"
 ];
 
-
-class tl_member
-{
-    private bool $use_private_adress;
-
-    private string $Zusatzname;
-}
-
-$appData = ContaoDCA::generate(tl_member::class);
-dump($appData);
+//
+//class tl_member
+//{
+//    private bool $use_private_adress;
+//
+//    private string $Zusatzname;
+//}
+//
+//$appData = ContaoDCA::generate(tl_member::class);
+//dump($appData);

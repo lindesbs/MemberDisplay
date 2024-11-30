@@ -5,6 +5,5 @@ use lindesbs\MemberDisplay\FrontendModule\MemberDisplayModule;
 
 $GLOBALS['BE_MOD']['layout']['memberdisplay'] = [
     'tables' => ['tl_memberdisplay_layout'],
+    'icon' => 'bundles/memberdisplay/icon.svg'
 ];
-
-dd($GLOBALS['BE_MOD']);

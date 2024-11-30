@@ -2,8 +2,10 @@
 
 namespace lindesbs\MemberDisplay\ContaoClasses;
 
+use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionProperty;
+
 class ContaoDCA
 {
     private const TYPE_MAPPING = [
@@ -19,7 +21,7 @@ class ContaoDCA
     public static function generate(string $entityClass): array
     {
         if (!class_exists($entityClass)) {
-            throw new \InvalidArgumentException("Class {$entityClass} does not exist");
+            throw new InvalidArgumentException("Class {$entityClass} does not exist");
         }
 
         $reflection = new ReflectionClass($entityClass);
@@ -32,7 +34,7 @@ class ContaoDCA
 
         foreach ($properties as $property) {
             $propertyDoc = $property->getDocComment();
-            $divider= self::extractDivider($propertyDoc);
+            $divider = self::extractDivider($propertyDoc);
 
             if ($divider !== null) {
                 if (!empty($paletteItems)) {

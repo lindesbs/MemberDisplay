@@ -1,9 +1,7 @@
 services:
-    _instanceof:
-        Contao\CoreBundle\Framework\FrameworkAwareInterface:
-            calls:
-                - ["setFramework", ["@contao.framework"]]
+    _defaults:
+        autoconfigure: true
 
-        Symfony\Component\DependencyInjection\ContainerAwareInterface:
-            calls:
-                - ["setContainer", ["@service_container"]]
+    lindesbs\MemberDisplay\ContentElement\DisplaySingleMemberController:
+        arguments:
+            - '@contao.framework'
