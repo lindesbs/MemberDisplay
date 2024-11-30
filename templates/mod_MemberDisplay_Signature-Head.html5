@@ -2,11 +2,12 @@
     <?php $i=$this->primaryImage; //dump($i);?>
     <?php if($i): ?>
     <div class="image">
-        <img src="<?= $i['src'] ?>" width="<?= $i['width'] ?>" height="<?= $i['height'] ?>" >
+        <img height="<?= $i['height'] ?>" src="<?= $i['src'] ?>" width="<?= $i['width'] ?>">
     </div>
     <?php endif; ?>
     <div class="header">
-    <?= $this->mitarbeiter->firstname ?> <?= $this->mitarbeiter->lastname ?><?php $m=$this->mitarbeiter->company; if ($m) echo $m; ?>
+        <?= $this->mitarbeiter->firstname ?> <?= $this->mitarbeiter->lastname ?><?php $m=$this->mitarbeiter->company; if
+        ($m) echo $m; ?>
     </div>
     <div class="body">
         <?php $em=$this->mitarbeiter->email ?>

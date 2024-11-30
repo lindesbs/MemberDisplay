@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-$GLOBALS['TL_DCA']['tl_member']['palettes']['default'].=";{legend_memberdisplay},primaryimage,signatureimage,secondaryimages";
+use lindesbs\MemberDisplay\ContaoClasses\ContaoDCA;
+
+$GLOBALS['TL_DCA']['tl_member']['palettes']['default'] .= ";{legend_memberdisplay},primaryimage,signatureimage,secondaryimages";
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['primaryimage'] = [
     'exclude' => true,
@@ -49,5 +51,6 @@ class tl_member
 
     private string $Zusatzname;
 }
-$appData = \lindesbs\MemberDisplay\ContaoClasses\ContaoDCA::generate(tl_member::class);
+
+$appData = ContaoDCA::generate(tl_member::class);
 dump($appData);
