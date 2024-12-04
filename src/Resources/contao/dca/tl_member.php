@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Contao\DataContainer;
-use lindesbs\MemberDisplay\ContaoClasses\ContaoDCA;
 
 $GLOBALS['TL_DCA']['tl_member']['palettes']['default'] .= ";{legend_memberdisplay},adressType,name,vorname,nachname,zsichenteil,titel,alternativeNamen,kurzbeschreibung,geburtsdatum,geburtsort,kuenstlernamen,nickname,homepage,email,telefon,bevorzugteKontaktart,geschlecht,familiäreBeziehung,duplikatVon;{address_legend},strasse,hausnummer,etage,plz,ort,land;";
 
