@@ -16,6 +16,7 @@ class MemberDisplayExtension extends Extension implements ConfigureFilesystemInt
     /**
      * {@inheritdoc}
      */
+    #[\Override]
     public function load(array $mergedConfig, ContainerBuilder $containerBuilder): void
     {
         $yamlFileLoader = new YamlFileLoader(
@@ -26,6 +27,7 @@ class MemberDisplayExtension extends Extension implements ConfigureFilesystemInt
         $yamlFileLoader->load('services.yml');
     }
 
+    #[\Override]
     public function configureFilesystem(FilesystemConfiguration $config): void
     {
         $filesStorageName = 'vCards';

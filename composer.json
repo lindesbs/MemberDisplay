@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "lindesbs/userobject": "^0.1"
+        "lindesbs/userobject": "@dev"
     },
     "extra": {
         "contao-manager-plugin": "lindesbs\\MemberDisplay\\ContaoManager\\Plugin"

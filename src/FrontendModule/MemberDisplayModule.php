@@ -26,6 +26,7 @@ class MemberDisplayModule extends Module
      *
      * @return string
      */
+    #[\Override]
     public function generate()
     {
         $request = System::getContainer()->get('request_stack')->getCurrentRequest();
@@ -48,6 +49,7 @@ class MemberDisplayModule extends Module
     /**
      * Generate the module
      */
+    #[\Override]
     protected function compile()
     {
         $container = System::getContainer();

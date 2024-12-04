@@ -1,6 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 use Contao\DataContainer;
+
+use Contao\Controller;
+
 use Contao\DC_Table;
 use Contao\Config;
 
@@ -14,50 +19,28 @@ $GLOBALS['TL_DCA']['tl_memberdisplay_layout'] = [
             ],
         ],
     ],
-    'list' => array
-    (
-        'sorting' => array
-        (
-            'mode' => DataContainer::MODE_SORTABLE,
-            'fields' => array('name'),
-            'panelLayout' => 'filter;search,limit',
-            'renderAsGrid' => true,
-            'limitHeight' => 160
-        )
-    ),
+    'list' => ['sorting' => ['mode' => DataContainer::MODE_SORTABLE, 'fields' => ['name'], 'panelLayout' => 'filter;search,limit'], 'label' => [
 
+  			'fields'                  => ['name', 'template'],
+  			'format'                  => '%s <span class="label-info">[%s]</span>',
+          ]],
     // Palettes
-    'palettes' => array
-    (
-        '__selector__' => ['generateVCard'],
-        'default' => '{title_legend},title,name;{layout_legend},template,memberImage,cssClass;{vcard_legend},generateVCard;{enclosure_legend:hide},addEnclosure;{publish_legend},published'
-    ),
+    'palettes' => ['__selector__' => ['generateVCard','generateQRCode'], 'default' => '{title_legend},name;{layout_legend},template,memberImage,cssClass;{vcard_legend},generateVCard;{qrcode_legend},generateQRCode;{enclosure_legend:hide},addEnclosure;{publish_legend},published'],
 
 
     // Sub-palettes
-    'subpalettes' => ['generateVCard' => 'vcardText,vcardLink,qrCodeType'],
+    'subpalettes' => [
+        'generateVCard' => 'vcardText,vcardLink',
+        'generateQRCode' => 'qrCodeType'
+    ],
 
     // Fields
     'fields' => [
-        
-        'id' => array
-        (
-            'sql' => "int(10) unsigned NOT NULL auto_increment"
-        ),
-        'pid' => array
-        (
-            'foreignKey' => 'tl_memberdisplay_layout.title',
-            'sql' => "int(10) unsigned NOT NULL default 0",
-            'relation' => array('type' => 'belongsTo', 'load' => 'lazy')
-        ),
-        'sorting' => array
-        (
-            'sql' => "int(10) unsigned NOT NULL default 0"
-        ),
-        'tstamp' => array
-        (
-            'sql' => "int(10) unsigned NOT NULL default 0"
-        ),
+
+        'id' => ['sql' => "int(10) unsigned NOT NULL auto_increment"],
+        'pid' => ['foreignKey' => 'tl_memberdisplay_layout.title', 'sql' => "int(10) unsigned NOT NULL default 0", 'relation' => ['type' => 'belongsTo', 'load' => 'lazy']],
+        'sorting' => ['sql' => "int(10) unsigned NOT NULL default 0"],
+        'tstamp' => ['sql' => "int(10) unsigned NOT NULL default 0"],
         'name' => [
 
             'label' => &$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['name'],
@@ -70,6 +53,7 @@ $GLOBALS['TL_DCA']['tl_memberdisplay_layout'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['template'],
             'exclude' => true,
             'inputType' => 'select',
+            'options_callback' => ['DCABackendClasses', 'getTemplates'],
             'eval' => ['tl_class' => 'w50', 'includeBlankOption'=>true],
             'sql' => "varchar(64) NOT NULL default ''"
         ],
@@ -96,22 +80,27 @@ $GLOBALS['TL_DCA']['tl_memberdisplay_layout'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['generateVCard'],
             'exclude' => true,
             'inputType' => 'checkbox',
-            'eval' => ['tl_class' => 'w50 m12', 'submitOnChange' => true],
+            'eval' => ['tl_class' => '', 'submitOnChange' => true],
+            'sql' => "char(1) NOT NULL default ''"
+        ],
+        'generateQRCode' => [
+            'label' => &$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['generateQRCode'],
+            'exclude' => true,
+            'inputType' => 'checkbox',
+            'eval' => ['tl_class' => '', 'submitOnChange' => true],
             'sql' => "char(1) NOT NULL default ''"
         ],
         'vcardText' => [
             'label' => &$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['vcardText'],
             'exclude' => true,
-            'inputType' => 'text',
-            'eval' => ['tl_class' => 'w50', 'maxlength' => 255],
-            'sql' => "varchar(255) NOT NULL default ''"
+            'inputType' => 'checkbox',
+            'sql' => "char(1) NOT NULL default ''"
         ],
         'vcardLink' => [
             'label' => &$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['vcardLink'],
             'exclude' => true,
-            'inputType' => 'text',
-            'eval' => ['tl_class' => 'w50', 'rgxp'=>'url'],
-            'sql' => "varchar(255) NOT NULL default ''"
+            'inputType' => 'checkbox',
+            'sql' => "char(1) NOT NULL default ''"
         ],
         'qrCodeType' => [
             'label' => &$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['qrCodeType'],
@@ -124,3 +113,13 @@ $GLOBALS['TL_DCA']['tl_memberdisplay_layout'] = [
         ],
     ]
 ];
+
+
+
+class DCABackendClasses
+{
+    public function getTemplates(DataContainer $dc)
+    {
+        return Controller::getTemplateGroup('ce_display_single_member_');
+    }
+}
