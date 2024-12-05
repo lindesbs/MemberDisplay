@@ -1,6 +1,7 @@
 services:
     _defaults:
         autoconfigure: true
+        autowire: true
 
     lindesbs\MemberDisplay\ContentElement\DisplaySingleMemberController:
         arguments:

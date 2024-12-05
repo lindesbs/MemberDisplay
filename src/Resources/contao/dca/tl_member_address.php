@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 
-
 use Contao\DataContainer;
+use lindesbs\MemberDisplay\EventListener\MemberAddressEventListener;
 
 $GLOBALS['TL_DCA']['tl_member_address'] = [
     'config' => [
@@ -17,10 +17,13 @@ $GLOBALS['TL_DCA']['tl_member_address'] = [
                 'pid' => 'index',
             ],
         ],
+        'onsubmit_callback' => [
+            [MemberAddressEventListener::class, '__invoke'],
+        ]
     ],
     'list' => [
         'sorting' => [
-            'mode'                    => DataContainer::MODE_PARENT,
+            'mode' => DataContainer::MODE_PARENT,
             'fields' => ['street'],
             'headerFields' => ['firstname', 'lastname'],
             'flag' => 1,
@@ -59,7 +62,13 @@ $GLOBALS['TL_DCA']['tl_member_address'] = [
             ],
         ],
     ],
-    'palettes' => "{legend_memberdisplay},adressType,name,vorname,nachname,zsichenteil,titel,alternativeNamen,kurzbeschreibung,geburtsdatum,geburtsort,kuenstlernamen,nickname,homepage,email,telefon,bevorzugteKontaktart,geschlecht,familiäreBeziehung,duplikatVon;{address_legend},strasse,hausnummer,etage,plz,ort,land;",
+    'palettes' => [
+        '__selector__' => [],
+        'default' => "{legend_memberdisplay},adressType,name,vorname,nachname,zsichenteil,titel,alternativeNamen,".
+            "kuenstlernamen,nickname;{address_legend},strasse,hausnummer,etage,plz,ort,land;kurzbeschreibung,".
+            "geburtsdatum,geburtsort,homepage,email,telefon,bevorzugteKontaktart,geschlecht;".
+            "familiaereBeziehung,duplikatVon",
+    ],
     'subpalettes' => [],
     'fields' => [
 
@@ -124,17 +133,19 @@ createDcaField('tl_member_address', 'addressType', [
     'eval' => ['includeBlankOption' => true, 'mandatory' => false],
 ]);
 
-createDcaField('tl_member_address', 'name', []);
-createDcaField('tl_member_address', 'vorname', []);
+createDcaField('tl_member_address', 'name', $evalConfig = ['tl_class' => 'w50 clr']);
+createDcaField('tl_member_address', 'vorname', $evalConfig = ['tl_class' => 'w50 clr']);
 
 createDcaField('tl_member_address', 'nachname', []);
-createDcaField('tl_member_address', 'language', []);
+createDcaField('tl_member_address', 'language', $evalConfig = ['tl_class' => 'w50']);
 createDcaField('tl_member_address', 'zwischenteil', []);
 createDcaField('tl_member_address', 'titel', [
     'inputType' => 'select',
-    'options' => ['Dr.', 'Prof.', 'Dr. Prof.', 'keiner'],
-    'eval' => ['includeBlankOption' => true],
-]);
+    'options' => lindesbs\MemberDisplay\Constants\AkademischeTitel::$arrTitel,
+    'eval' => ['includeBlankOption' => true, 'chosen' => true,'tl_class' => 'w25']
+        ]
+
+);
 
 createDcaField('tl_member_address', 'alternativeNamen', []);
 createDcaField('tl_member_address', 'kurzbeschreibung', [
@@ -145,9 +156,11 @@ createDcaField('tl_member_address', 'kurzbeschreibung', [
 createDcaField('tl_member_address', 'geburtsdatum', [
     'inputType' => 'text',
     'eval' => ['rgxp' => 'date', 'datepicker' => true],
-]);
+],
+    $evalConfig = ['tl_class' => 'w25']);
 
-createDcaField('tl_member_address', 'geburtsort', []);
+createDcaField('tl_member_address', 'geburtsort', [],
+    $evalConfig = ['tl_class' => 'w25']);
 createDcaField('tl_member_address', 'kuenstlernamen', []);
 createDcaField('tl_member_address', 'nickname', []);
 createDcaField('tl_member_address', 'homepage', []);
@@ -187,13 +200,13 @@ createDcaField('tl_member_address', 'geschlecht', [
 createDcaField('tl_member_address', 'familiaereBeziehung', [
     'inputType' => 'select',
     'foreignKey' => 'tl_member_address.id',
-    'eval' => ['mandatory' => false],
+    'eval' => ['mandatory' => false,'includeBlankOption' => true,'tl_class' => 'w25'],
 ]);
 
 createDcaField('tl_member_address', 'duplikatVon', [
     'inputType' => 'select',
     'foreignKey' => 'tl_member_address.id',
-    'eval' => ['mandatory' => false],
+    'eval' => ['mandatory' => false,'includeBlankOption' => true,'tl_class' => 'w25'],
 ]);
 
 createDcaField('tl_member_address', 'strasse', []);
@@ -240,33 +253,26 @@ class BackendDCAMemberDisplay
      */
     public function setDefaultFromSource($varValue, DataContainer $dc)
     {
-        // Hole die Quelle des aktuellen Feldes aus der Konfiguration
         $sourceField = $this->getSourceField($dc->field);
+        $objMember = \Contao\MemberModel::findById($dc->activeRecord->pid);
 
-        // Überprüfen, ob das Feld leer ist und die Quelle gesetzt wurde
-        if (empty($varValue) && isset($dc->activeRecord->$sourceField) && !empty($dc->activeRecord->$sourceField)) {
-            return $dc->activeRecord->$sourceField;
+
+        if (empty($varValue) && isset($objMember->$sourceField) && !empty($objMember->$sourceField)) {
+            return $objMember->$sourceField;
         }
 
         return $varValue;
     }
 
-    /**
-     * Gibt das Quellfeld für ein bestimmtes Ziel-Feld zurück
-     *
-     * @param string $fieldName Der Name des aktuellen Feldes
-     *
-     * @return string|null Der Name des Quellfeldes oder null
-     */
+
     private function getSourceField($fieldName)
     {
-
         return self::$fieldsWithDefaults[$fieldName] ?? null;
     }
 
 
     public function listAddressRecords(array $row): string
     {
-        return sprintf('%s<br>%s, %s %s',$row['name'], $row['street'], $row['postal'], $row['city']);
+        return sprintf('%s<br>%s, %s %s', $row['name'], $row['street'], $row['postal'], $row['city']);
     }
 }
