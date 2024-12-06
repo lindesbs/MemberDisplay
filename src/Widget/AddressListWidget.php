@@ -3,9 +3,11 @@
 namespace lindesbs\MemberDisplay\Widget;
 
 use Contao\Backend;
+use Contao\BackendTemplate;
 use Contao\Database;
 use Contao\DataContainer;
 use Contao\Widget;
+use lindesbs\MemberDisplay\Models\MemberAddressModel;
 
 class AddressListWidget extends Widget
 {
@@ -19,50 +21,25 @@ class AddressListWidget extends Widget
      */
     public function generate(): string
     {
-        // Hole die ID des aktuellen Datensatzes
+        $GLOBALS['TL_CSS']['be_widget_itemlist'] =
+            \Contao\Template::generateStyleTag('bundles/memberdisplay/be_widget_itemlist.css');
+
         $dc = $this->objDca;
         $parentId = $dc->activeRecord->id;
 
-        // Lade die Adressen aus der tl_member_address-Tabelle
-        $addresses = Database::getInstance()
-            ->prepare("SELECT * FROM tl_member_address WHERE pid=?")
-            ->execute($parentId);
 
-        if (!$addresses->numRows) {
-            return '<p>No addresses added yet.</p>';
-        }
+        $template = new BackendTemplate('be_addresslist_widget');
 
-        // Generiere eine Liste der Adressen
-        $output = '<ul>';
-        while ($addresses->next()) {
-            $addAddressUrl = Backend::addToUrl(
-                sprintf('act=edit&table=tl_member_address&pid=%d', $addresses->id)
-            );
+        $addresses = MemberAddressModel::findByPk($parentId);
 
-            $output .= sprintf(
-                '<li>%s, %s, %s %s (%s) %s</li>',
-                $addresses->name,
-                $addresses->street,
-                $addresses->postal,
-                $addresses->city,
-                $addresses->country,
-                sprintf(
-                    '<p><a href="%s" class="tl_submit">Edit</a></p>',
-                    $addAddressUrl
-                )
-            );
-        }
-        $output .= '</ul>';
+        // URLs für Bearbeiten und Löschen erstellen
+        $editUrl = 'contao?do=member&table=tl_member_address&amp;act=edit';
+        $deleteUrl = 'contao?do=member&table=tl_member_address&amp;act=delete';
 
-        // Link, um neue Adressen hinzuzufügen
-        $addAddressUrl = Backend::addToUrl(
-            sprintf('act=create&table=tl_member_address&pid=%d', $parentId)
-        );
-        $output .= sprintf(
-            '<p><a href="%s" class="tl_submit">Add new address</a></p>',
-            $addAddressUrl
-        );
+        $template->addresses = $addresses;
+        $template->editUrl = $editUrl;
+        $template->deleteUrl = $deleteUrl;
 
-        return $output;
+        return $template->parse();
     }
 }

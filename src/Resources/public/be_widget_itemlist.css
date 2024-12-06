@@ -1,0 +1,47 @@
+.address-list {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+.address-list th {
+    background-color: #f4f4f4;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.address-list td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.address-list .actions {
+    text-align: center;
+    white-space: nowrap;
+}
+
+.address-list .button {
+    background-color: #0073aa;
+    color: #fff;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.address-list .button:hover {
+    background-color: #005a8c;
+    text-decoration: none;
+}
+
+.address-list .button.delete {
+    background-color: #d32f2f;
+}
+
+.address-list .button.delete:hover {
+    background-color: #b71c1c;
+}

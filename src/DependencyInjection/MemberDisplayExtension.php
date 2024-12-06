@@ -21,7 +21,7 @@ class MemberDisplayExtension extends Extension implements ConfigureFilesystemInt
     {
         $yamlFileLoader = new YamlFileLoader(
             $containerBuilder,
-            new FileLocator(__DIR__ . '/../../config')
+            new FileLocator(__DIR__ . '/../Resources/config')
         );
 
         $yamlFileLoader->load('services.yml');
@@ -30,11 +30,11 @@ class MemberDisplayExtension extends Extension implements ConfigureFilesystemInt
     #[\Override]
     public function configureFilesystem(FilesystemConfiguration $config): void
     {
-        $filesStorageName = 'vCards';
-        $config
-            ->mountLocalAdapter('vCards', 'vCards', 'files')
-            ->addVirtualFilesystem($filesStorageName, 'vCards')
-        ;
+//        $filesStorageName = 'vCards';
+//        $config
+//            ->mountLocalAdapter('vCards', 'vCards', 'files')
+//            ->addVirtualFilesystem($filesStorageName, 'vCards')
+//        ;
 
     }
 }

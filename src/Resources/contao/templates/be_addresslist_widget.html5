@@ -1,0 +1,20 @@
+<?php echo ($this->addresses->first()->vorname); ?>
+
+<table class="address-list" >
+    <tbody>
+    <?php foreach ($this->addresses as $address): ?>
+    <tr>
+        <td>
+            <strong>Name:</strong> <?= htmlspecialchars($address['vorname'] . ' ' . $address['nachname']) ?><br>
+            <strong>Adresse:</strong> <?= htmlspecialchars($address['strasse'] . ', ' . $address['plz'] . ' ' . $address['ort']) ?><br>
+            <strong>Land:</strong> <?= htmlspecialchars($address['nickname']) ?>
+        </td>
+        <td class="actions">
+            <a href="<?= $this->editUrl ?>&amp;id=<?= $address['id'] ?>" class="button">Bearbeiten</a>
+            <a href="<?= $this->deleteUrl ?>&amp;id=<?= $address['id'] ?>" class="button delete"
+               onclick="return confirm('Möchten Sie diese Adresse wirklich löschen?');">Löschen</a>
+        </td>
+    </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
