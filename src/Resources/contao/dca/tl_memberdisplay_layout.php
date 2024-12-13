@@ -2,12 +2,10 @@
 
 declare(strict_types=1);
 
-use Contao\DataContainer;
-
-use Contao\Controller;
-
-use Contao\DC_Table;
 use Contao\Config;
+use Contao\DataContainer;
+use Contao\DC_Table;
+use lindesbs\MemberDisplay\Classes\DCABackendClasses;
 
 $GLOBALS['TL_DCA']['tl_memberdisplay_layout'] = [
     'config' => [
@@ -20,14 +18,11 @@ $GLOBALS['TL_DCA']['tl_memberdisplay_layout'] = [
         ],
     ],
     'list' => ['sorting' => ['mode' => DataContainer::MODE_SORTABLE, 'fields' => ['name'], 'panelLayout' => 'filter;search,limit'], 'label' => [
-
-  			'fields'                  => ['name', 'template'],
-  			'format'                  => '%s <span class="label-info">[%s]</span>',
+            'fields' => ['name', 'template'],
+            'format' => '%s <span class="label-info">[%s]</span>',
           ]],
     // Palettes
     'palettes' => ['__selector__' => ['generateVCard','generateQRCode'], 'default' => '{title_legend},name;{layout_legend},template,memberImage,cssClass;{vcard_legend},generateVCard;{qrcode_legend},generateQRCode;{enclosure_legend:hide},addEnclosure;{publish_legend},published'],
-
-
     // Sub-palettes
     'subpalettes' => [
         'generateVCard' => 'vcardText,vcardLink',
@@ -53,7 +48,7 @@ $GLOBALS['TL_DCA']['tl_memberdisplay_layout'] = [
             'label' => &$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['template'],
             'exclude' => true,
             'inputType' => 'select',
-            'options_callback' => ['DCABackendClasses', 'getTemplates'],
+            'options_callback' => [DCABackendClasses::class, 'getTemplates'],
             'eval' => ['tl_class' => 'w50', 'includeBlankOption'=>true],
             'sql' => "varchar(64) NOT NULL default ''"
         ],
@@ -113,13 +108,3 @@ $GLOBALS['TL_DCA']['tl_memberdisplay_layout'] = [
         ],
     ]
 ];
-
-
-
-class DCABackendClasses
-{
-    public function getTemplates(DataContainer $dc)
-    {
-        return Controller::getTemplateGroup('ce_display_single_member_');
-    }
-}

@@ -3,6 +3,10 @@ services:
         autoconfigure: true
         autowire: true
 
+    lindesbs\MemberDisplay\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Tests,Resources}'
+
     lindesbs\MemberDisplay\ContentElement\DisplaySingleMemberController:
         arguments:
             - '@contao.framework'

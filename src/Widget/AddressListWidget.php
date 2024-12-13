@@ -2,10 +2,7 @@
 
 namespace lindesbs\MemberDisplay\Widget;
 
-use Contao\Backend;
 use Contao\BackendTemplate;
-use Contao\Database;
-use Contao\DataContainer;
 use Contao\Widget;
 use lindesbs\MemberDisplay\Models\MemberAddressModel;
 

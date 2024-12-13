@@ -17,11 +17,11 @@ class MemberDisplayExtension extends Extension implements ConfigureFilesystemInt
      * {@inheritdoc}
      */
     #[\Override]
-    public function load(array $mergedConfig, ContainerBuilder $containerBuilder): void
+    public function load(array $mergedConfig, ContainerBuilder $container): void
     {
         $yamlFileLoader = new YamlFileLoader(
-            $containerBuilder,
-            new FileLocator(__DIR__ . '/../Resources/config')
+            $container,
+            new FileLocator(__DIR__ . '/../../config')
         );
 
         $yamlFileLoader->load('services.yml');
