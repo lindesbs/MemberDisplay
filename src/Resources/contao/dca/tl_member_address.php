@@ -96,12 +96,14 @@ DCABackendClasses::createDcaField('tl_member_address', 'vorname', $evalConfig = 
 DCABackendClasses::createDcaField('tl_member_address', 'nachname', []);
 DCABackendClasses::createDcaField('tl_member_address', 'language', $evalConfig = ['tl_class' => 'w50']);
 DCABackendClasses::createDcaField('tl_member_address', 'zwischenteil', []);
-DCABackendClasses::createDcaField('tl_member_address', 'titel', [
+DCABackendClasses::createDcaField(
+    'tl_member_address',
+    'titel',
+    [
     'inputType' => 'select',
     'options' => lindesbs\MemberDisplay\Constants\AkademischeTitel::$arrTitel,
     'eval' => ['includeBlankOption' => true, 'chosen' => true,'tl_class' => 'w25']
         ]
-
 );
 
 DCABackendClasses::createDcaField('tl_member_address', 'alternativeNamen', []);
@@ -110,14 +112,22 @@ DCABackendClasses::createDcaField('tl_member_address', 'kurzbeschreibung', [
     'eval' => ['mandatory' => false, 'rte' => 'tinyMCE'],
 ]);
 
-DCABackendClasses::createDcaField('tl_member_address', 'geburtsdatum', [
+DCABackendClasses::createDcaField(
+    'tl_member_address',
+    'geburtsdatum',
+    [
     'inputType' => 'text',
     'eval' => ['rgxp' => 'date', 'datepicker' => true],
 ],
-    $evalConfig = ['tl_class' => 'w25']);
+    $evalConfig = ['tl_class' => 'w25']
+);
 
-DCABackendClasses::createDcaField('tl_member_address', 'geburtsort', [],
-    $evalConfig = ['tl_class' => 'w25']);
+DCABackendClasses::createDcaField(
+    'tl_member_address',
+    'geburtsort',
+    [],
+    $evalConfig = ['tl_class' => 'w25']
+);
 DCABackendClasses::createDcaField('tl_member_address', 'kuenstlernamen', []);
 DCABackendClasses::createDcaField('tl_member_address', 'nickname', []);
 DCABackendClasses::createDcaField('tl_member_address', 'homepage', []);
@@ -127,7 +137,7 @@ DCABackendClasses::createDcaField('tl_member_address', 'email', [
 ]);
 
 DCABackendClasses::createDcaField('tl_member_address', 'telefon', [
-    'inputType' => 'multiColumnWizard',
+    'inputType' => 'select',
     'eval' => [
         'columnFields' => [
             'number' => [
@@ -178,3 +188,5 @@ foreach (BackendDCAMemberDisplay::$fieldsWithDefaults as $field => $sourceField)
     $GLOBALS['TL_DCA']['tl_member_address']['fields'][$field]['load_callback'][] = [BackendDCAMemberDisplay::class, 'setDefaultFromSource'];
 }
 
+
+DCABackendClasses::exportArrayToPhpFile($GLOBALS['TL_DCA']['tl_member_address']['fields'], '/Users/stefan/htdocs/contao.contact/files.php', '$fields');

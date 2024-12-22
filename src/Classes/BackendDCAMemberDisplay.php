@@ -35,7 +35,7 @@ class BackendDCAMemberDisplay
      *
      * @return mixed Der neue Wert des Feldes
      */
-    public function setDefaultFromSource($varValue, DataContainer $dc)
+    public function setDefaultFromSource(mixed $varValue, DataContainer $dc)
     {
         $sourceField = $this->getSourceField($dc->field);
         $objMember = \Contao\MemberModel::findById($dc->activeRecord->pid);

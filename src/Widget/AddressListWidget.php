@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace lindesbs\MemberDisplay\Widget;
 
 use Contao\BackendTemplate;
@@ -8,16 +10,19 @@ use lindesbs\MemberDisplay\Models\MemberAddressModel;
 
 class AddressListWidget extends Widget
 {
-    protected $blnSubmitInput = false; // Keine direkte Eingabe erforderlich
+    protected $blnSubmitInput = false;
+
+    // Keine direkte Eingabe erforderlich
     protected $strTemplate = 'be_widget';
 
     /**
      * Generate the widget
-     *
-     * @return string
      */
+    #[\Override]
     public function generate(): string
     {
+
+        echo "**";
         $GLOBALS['TL_CSS']['be_widget_itemlist'] =
             \Contao\Template::generateStyleTag('bundles/memberdisplay/be_widget_itemlist.css');
 
@@ -28,14 +33,10 @@ class AddressListWidget extends Widget
         $template = new BackendTemplate('be_addresslist_widget');
 
         $addresses = MemberAddressModel::findByPk($parentId);
-
-        // URLs für Bearbeiten und Löschen erstellen
         $editUrl = 'contao?do=member&table=tl_member_address&amp;act=edit';
-        $deleteUrl = 'contao?do=member&table=tl_member_address&amp;act=delete';
 
         $template->addresses = $addresses;
         $template->editUrl = $editUrl;
-        $template->deleteUrl = $deleteUrl;
 
         return $template->parse();
     }

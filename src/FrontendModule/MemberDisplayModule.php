@@ -12,7 +12,6 @@ use Contao\System;
 
 class MemberDisplayModule extends Module
 {
-
     /**
      * Template
      *

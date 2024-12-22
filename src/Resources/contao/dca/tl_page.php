@@ -1,6 +1,8 @@
 <?php
 
 
+declare(strict_types=1);
+
 use lindesbs\MemberDisplay\Controller\Page\QRCodePage;
 use lindesbs\MemberDisplay\Controller\Page\VCardPage;
 

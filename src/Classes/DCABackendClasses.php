@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace lindesbs\MemberDisplay\Classes;
 
 use Contao\Backend;
 use Contao\Config;
 use Contao\Controller;
 use Contao\DataContainer;
+use lindesbs\MemberDisplay\Models\MemberAddressModel;
 
 class DCABackendClasses extends Backend
 {
@@ -15,8 +18,27 @@ class DCABackendClasses extends Backend
     }
 
 
+    public function ensureDefaultAddress(DataContainer $dc): void
+    {
+        // Check if we are editing a specific record
+        if (!$dc->id) {
+            return;
+        }
 
-    static function createDcaField(string $dca, string $fieldName, array $config = [], array $evalConfig = [], string $inputType = "text"): void
+        $objAddress = MemberAddressModel::findByPk($dc->id);
+
+        if ($objAddress) {
+            return;
+        }
+
+        $objAddress = new MemberAddressModel();
+        $objAddress->pid = $dc->id;
+
+        $objAddress->save();
+    }
+
+
+    public static function createDcaField(string $dca, string $fieldName, array $config = [], array $evalConfig = [], string $inputType = "text"): void
     {
         $defaultConfig = [
             'label' => $GLOBALS['TL_LANG'][$dca][$fieldName] ?? ['###', '###'],
@@ -58,6 +80,19 @@ class DCABackendClasses extends Backend
 
         $config['eval'] = array_merge($config['eval'], $evalConfig);
         $GLOBALS['TL_DCA'][$dca]['fields'][$fieldName] = array_merge($defaultConfig, $config);
+    }
+
+
+
+    public static function exportArrayToPhpFile(array $array, string $filePath, string $variableName = '$data'): bool
+    {
+        // Erstellen des PHP-Inhalts
+        $phpContent = "<?php\n\n";
+        $phpContent .= "// Automatisch generierte Datei\n";
+        $phpContent .= $variableName . ' = ' . var_export($array, true) . ";\n";
+
+        // Speichern der Datei
+        return file_put_contents($filePath, $phpContent) !== false;
     }
 
 }

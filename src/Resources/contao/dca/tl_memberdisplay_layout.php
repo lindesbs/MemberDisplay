@@ -49,7 +49,7 @@ $GLOBALS['TL_DCA']['tl_memberdisplay_layout'] = [
             'exclude' => true,
             'inputType' => 'select',
             'options_callback' => [DCABackendClasses::class, 'getTemplates'],
-            'eval' => ['tl_class' => 'w50', 'includeBlankOption'=>true],
+            'eval' => ['tl_class' => 'w50', 'includeBlankOption' => true],
             'sql' => "varchar(64) NOT NULL default ''"
         ],
         'memberImage' => [

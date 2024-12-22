@@ -29,4 +29,4 @@ $GLOBALS['TL_LANG']['tl_memberdisplay_layout']['qrCodeType_options'] = [
 $GLOBALS['TL_LANG']['tl_memberdisplay_layout']['new'] = ['Neues Layout', 'Ein neues Layout erstellen'];
 $GLOBALS['TL_LANG']['tl_memberdisplay_layout']['edit'] = ['Layout bearbeiten', 'Layout ID %s bearbeiten'];
 $GLOBALS['TL_LANG']['tl_memberdisplay_layout']['delete'] = ['Layout löschen', 'Layout ID %s löschen'];
-$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['show'] = ['Layout Details', 'Details des Layouts ID %s anzeigen']; 
+$GLOBALS['TL_LANG']['tl_memberdisplay_layout']['show'] = ['Layout Details', 'Details des Layouts ID %s anzeigen'];

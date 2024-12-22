@@ -5,7 +5,7 @@ services:
 
     lindesbs\MemberDisplay\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Tests,Resources}'
+        exclude: '../src/{DependencyInjection,Entity,Tests,Resources,Classes}'
 
     lindesbs\MemberDisplay\ContentElement\DisplaySingleMemberController:
         arguments:

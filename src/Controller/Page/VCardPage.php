@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 namespace lindesbs\MemberDisplay\Controller\Page;
 
@@ -14,7 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 )]
 class VCardPage extends AbstractController
 {
-    const TYPE = 'contact.export.vcard';
+    public const TYPE = 'contact.export.vcard';
+
     public function __invoke(PageModel $pageModel): Response
     {
         return new Response("VCard");

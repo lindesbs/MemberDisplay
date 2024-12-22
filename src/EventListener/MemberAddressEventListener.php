@@ -2,7 +2,6 @@
 
 declare(strict_types=1);
 
-
 namespace lindesbs\MemberDisplay\EventListener;
 
 use Contao\CoreBundle\DependencyInjection\Attribute\AsCallback;
@@ -15,15 +14,26 @@ class MemberAddressEventListener
 {
     public function __invoke(DataContainer $dc): void
     {
-        if ($dc->activeRecord->name=='') {
-            $newName = trim(sprintf("%s %s %s",
+        if ($dc->activeRecord->name == '') {
+            $newName = trim(sprintf(
+                "%s %s %s",
                 AkademischeTitel::$arrTitel[$dc->activeRecord->titel],
                 $dc->activeRecord->vorname,
-                $dc->activeRecord->nachname));
+                $dc->activeRecord->nachname
+            ));
 
 
             $objMemberAddress = MemberAddressModel::findById($dc->activeRecord->id);
-            $objMemberAddress->name = $newName;
+            if ($objMemberAddress !== null) {
+                $objMemberAddress->name = $newName;
+                $objMemberAddress->save();
+            } else {
+                // Fehlerbehandlung: Kein MemberAddress gefunden
+                throw new \RuntimeException(sprintf(
+                    'No MemberAddress found for ID %d',
+                    $dc->activeRecord->id
+                ));
+            }
 
             $objMemberAddress->save();
         }

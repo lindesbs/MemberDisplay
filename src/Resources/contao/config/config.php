@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 use lindesbs\MemberDisplay\Models\MemberAddressModel;
@@ -17,4 +18,3 @@ $GLOBALS['BE_FFL']['addressList'] = AddressListWidget::class;
 // Models
 $GLOBALS['TL_MODELS']['tl_member_address'] = MemberAddressModel::class;
 $GLOBALS['TL_MODELS']['tl_memberdisplay_layout'] = MemberDisplayLayoutModel::class;
-

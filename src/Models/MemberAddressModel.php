@@ -8,7 +8,6 @@ use Contao\Model;
 
 class MemberAddressModel extends Model
 {
-
     /**
      * Table name
      * @var string

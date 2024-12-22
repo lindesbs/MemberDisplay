@@ -30,11 +30,11 @@ class MemberDisplayExtension extends Extension implements ConfigureFilesystemInt
     #[\Override]
     public function configureFilesystem(FilesystemConfiguration $config): void
     {
-//        $filesStorageName = 'vCards';
-//        $config
-//            ->mountLocalAdapter('vCards', 'vCards', 'files')
-//            ->addVirtualFilesystem($filesStorageName, 'vCards')
-//        ;
+        //        $filesStorageName = 'vCards';
+        //        $config
+        //            ->mountLocalAdapter('vCards', 'vCards', 'files')
+        //            ->addVirtualFilesystem($filesStorageName, 'vCards')
+        //        ;
 
     }
 }

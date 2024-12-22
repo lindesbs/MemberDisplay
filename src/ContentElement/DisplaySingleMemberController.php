@@ -9,6 +9,7 @@ use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\MemberModel;
 use Contao\Template;
+use lindesbs\MemberDisplay\EventListener\MemberDisplayBackend;
 use lindesbs\userobject\DTO\VCard\Enum\EmailType;
 use lindesbs\userobject\DTO\VCard\Enum\PhoneType;
 use lindesbs\userobject\VCard;
@@ -25,7 +26,11 @@ class DisplaySingleMemberController extends AbstractContentElementController
     {
         $vcard = new VCard();
 
-        $member = MemberModel::findAll()->first();
+        if ($model->memberdisplay_member == MemberDisplayBackend::TYPE_LOGGEDIN) {
+            return new Response(MemberDisplayBackend::TYPE_LOGGEDIN);
+        }
+
+        $member = MemberModel::findById($model->memberdisplay_member);
 
         $vcard->getIdentification()
             ->setFormattedName(trim(sprintf("%s %s", $member->firstname, $member->lastname)))

@@ -1,6 +1,8 @@
 <?php
 
 
+declare(strict_types=1);
+
 // Label und Beschreibungen für tl_member_address
 $GLOBALS['TL_LANG']['tl_member_address']['adressType'] = ['Adress-Typ', 'Wählen Sie den Typ der Adresse (privat, hobby, beruflich).'];
 $GLOBALS['TL_LANG']['tl_member_address']['name'] = ['Name', 'Geben Sie den Nachnamen des Mitglieds ein.'];
