@@ -13,11 +13,12 @@ class MemberDisplayExtension extends Extension
 {
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
-    public function load(array $mergedConfig, ContainerBuilder $containerBuilder): void
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $yamlFileLoader = new YamlFileLoader(
-            $containerBuilder,
+            $container,
             new FileLocator(__DIR__ . '/../Resources/config')
         );
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-$GLOBALS['TL_DCA']['tl_member']['palettes']['default'].=";{legend_memberdisplay},primaryimage,signatureimage,secondaryimages";
+$GLOBALS['TL_DCA']['tl_member']['palettes']['default'] .= ";{legend_memberdisplay},primaryimage,signatureimage,secondaryimages";
 
 $GLOBALS['TL_DCA']['tl_member']['fields']['primaryimage'] = [
     'exclude' => true,

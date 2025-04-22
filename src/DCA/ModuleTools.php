@@ -18,15 +18,14 @@ class ModuleTools extends Backend
 
     public function getTitle(DataContainer $dataContainer)
     {
-        $arrModules=[];
+        $arrModules = [];
         $result = $this->Database->execute("SELECT id,firstname,lastname,company FROM tl_member WHERE disable!=1 ORDER BY firstname");
 
-        while ($result->next())
-        {
-            $name = trim($result->firstname.' '.$result->lastname);
+        while ($result->next()) {
+            $name = trim($result->firstname . ' ' . $result->lastname);
 
             if ($result->company) {
-                $name.=", ".$result->company;
+                $name .= ", " . $result->company;
             }
 
             $arrModules[$result->id] = $name;
